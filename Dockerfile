@@ -1,4 +1,4 @@
-FROM php:7.4.6-fpm
+FROM php:7.3.16-fpm
 RUN  apt-get update \
     && apt-get install -y --no-install-recommends libxpm-dev libxml2-dev jpegoptim optipng pngquant gifsicle screen \
     libjpeg62-turbo-dev libpng-dev  libfreetype6-dev libmagickwand-dev libmemcached-dev libcurl4-openssl-dev pkg-config \
