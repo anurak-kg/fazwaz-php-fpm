@@ -14,8 +14,8 @@ RUN docker-php-ext-configure opcache --enable-opcache \
     && docker-php-ext-install pdo_mysql mysqli pcntl intl bcmath fileinfo exif zip gd opcache
 
 RUN git clone https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached \
-        && docker-php-ext-configure memcached --enable-memcached-igbinary  \
-        && docker-php-ext-install memcached
+    && docker-php-ext-configure memcached --enable-memcached-igbinary  \
+    && docker-php-ext-install memcached
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && BIN_PATH=/usr/local/bin/\
