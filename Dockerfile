@@ -30,7 +30,7 @@ ENV NODE_VERSION 10.16.3
 
 # install nvm
 # https://github.com/creationix/nvm#install-script
-#RUN cd /tmp \
+# RUN cd /tmp \
 #    && git clone https://github.com/tideways/php-profiler-extension.git \
 #    && cd /tmp/php-profiler-extension \
 #    && phpize \
