@@ -1,4 +1,4 @@
-FROM php:7.3.16-fpm
+FROM php:7.4.6-fpm
 RUN  apt-get update \
     && apt-get install -y --no-install-recommends libxpm-dev libxml2-dev jpegoptim optipng pngquant gifsicle screen \
     libjpeg62-turbo-dev libpng-dev  libfreetype6-dev libmagickwand-dev libmemcached-dev libcurl4-openssl-dev pkg-config \
@@ -14,8 +14,8 @@ RUN docker-php-ext-configure opcache --enable-opcache \
     && docker-php-ext-install pdo_mysql mysqli pcntl intl bcmath fileinfo exif zip gd opcache
 
 RUN git clone https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached \
-        && docker-php-ext-configure memcached --enable-memcached-igbinary  \
-        && docker-php-ext-install memcached
+    && docker-php-ext-configure memcached --enable-memcached-igbinary  \
+    && docker-php-ext-install memcached
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && BIN_PATH=/usr/local/bin/\
@@ -30,7 +30,7 @@ ENV NODE_VERSION 10.16.3
 
 # install nvm
 # https://github.com/creationix/nvm#install-script
-#RUN cd /tmp \
+# RUN cd /tmp \
 #    && git clone https://github.com/tideways/php-profiler-extension.git \
 #    && cd /tmp/php-profiler-extension \
 #    && phpize \
