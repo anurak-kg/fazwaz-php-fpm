@@ -66,6 +66,8 @@ RUN git clone https://github.com/libgeos/php-geos.git \
 
 RUN  composer global require "hirak/prestissimo"
 COPY entryscript.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entryscript.sh
+
 WORKDIR /var/www/
 ENTRYPOINT ["entryscript.sh"]
 CMD ["php-fpm"]
