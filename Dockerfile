@@ -23,7 +23,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # nvm environment variables
 ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 10.16.3
+ENV NODE_VERSION 12.18.3
 
 # install nvm
 # https://github.com/creationix/nvm#install-script
