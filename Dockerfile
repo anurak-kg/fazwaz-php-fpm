@@ -1,4 +1,4 @@
-FROM php:7.4.9-fpm
+FROM php:7.4.10-fpm
 RUN  apt-get update \
     && apt-get install -y --no-install-recommends libxpm-dev libxml2-dev jpegoptim optipng pngquant gifsicle screen \
     libjpeg62-turbo-dev libpng-dev  libfreetype6-dev libmagickwand-dev libmemcached-dev libcurl4-openssl-dev pkg-config \
@@ -21,36 +21,11 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
     && curl -LsS https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar -o ${BIN_PATH}phpcbf \
     && chmod a+x ${BIN_PATH}phpcbf
 
-# nvm environment variables
-ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 12.18.3
-
-# install nvm
-# https://github.com/creationix/nvm#install-script
-#RUN cd /tmp \
-#    && git clone https://github.com/tideways/php-profiler-extension.git \
-#    && cd /tmp/php-profiler-extension \
-#    && phpize \
-#    && ./configure \
-#    && make && make install
-
-
-RUN curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.5/install.sh | bash
-
-# install node and npm
-RUN . $NVM_DIR/nvm.sh \
-    && nvm install $NODE_VERSION \
-    && nvm alias default $NODE_VERSION \
-    && nvm use default \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean \
-    && pecl clear-cache
-# add node and npm to path so the commands are available
-ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
-ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+#ENV NODE_VERSION 12.18.3
+RUN curl -sL https://deb.nodesource.com/setup_lts.x |  bash -
 
 # OSGeo lib (libgeo) (php-geos)
-RUN apt-get update && apt-get install -y libgeos-dev
+RUN apt-get update && apt-get install -y libgeos-dev nodejs
 RUN git clone https://github.com/libgeos/php-geos.git \
   && ( \
     cd php-geos \
