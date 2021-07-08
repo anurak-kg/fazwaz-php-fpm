@@ -18,5 +18,4 @@ elif [ "$role" = "scheduler" ]; then
 elif [ "${1#-}" != "$1" ]; then
 	set -- php-fpm "$@"
 fi
-
 exec "$@"
