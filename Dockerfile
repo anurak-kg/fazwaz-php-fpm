@@ -1,4 +1,4 @@
-FROM php:8.0.8-fpm
+FROM php:8.1.11-fpm
 RUN  apt-get update \
     && apt-get install -y --no-install-recommends libxpm-dev libxml2-dev jpegoptim optipng pngquant gifsicle screen \
     libjpeg62-turbo-dev libpng-dev libfreetype6-dev libmagickwand-dev libmemcached-dev libcurl4-openssl-dev pkg-config \
@@ -8,7 +8,7 @@ RUN  apt-get update \
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ --with-xpm=/usr/include/ \
     && pecl install xdebug imagick igbinary mongodb redis\
     && docker-php-ext-enable imagick igbinary mongodb redis opcache \
-    && docker-php-ext-install pdo_mysql mysqli pcntl intl bcmath fileinfo exif zip gd
+    && docker-php-ext-install pdo_mysql mysqli pcntl intl bcmath fileinfo exif zip gd sockets
 
 # Memcache
 #RUN git clone https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached \
@@ -25,10 +25,13 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 
 # Node Js and GEOS Lib
-RUN curl -sL https://deb.nodesource.com/setup_14.x |  bash -  \
+RUN curl -sL https://deb.nodesource.com/setup_16.x |  bash -  \
     && apt-get update \
-    && apt-get install -y libgeos-dev  gnupg2 nodejs -y && apt-get clean
-RUN  git clone https://github.com/ModelTech/php-geos \
+    && apt-get install -y libgeos-dev  gnupg2 nodejs -y \
+    && apt-get clean
+
+# PHP Geos
+RUN git clone https://github.com/ModelTech/php-geos.git \
     && ( \
     cd php-geos \
     && ./autogen.sh \
@@ -37,6 +40,7 @@ RUN  git clone https://github.com/ModelTech/php-geos \
     && make install \
   ) \
   && rm -r php-geos && docker-php-ext-enable geos
+
 # Tideways APM
 #RUN echo 'deb http://s3-eu-west-1.amazonaws.com/tideways/packages debian main' > /etc/apt/sources.list.d/tideways.list && \
 #    curl -sS 'https://s3-eu-west-1.amazonaws.com/tideways/packages/EEB5E8F4.gpg' | apt-key add - && \
